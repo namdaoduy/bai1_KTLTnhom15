@@ -1,1 +1,23 @@
+các menu:
 
+1. Tạo 1 lớp học: cây nhị phân tìm kiếm (Binary Search Tree)
+  - Sẽ có 1 mảng tạo sẵn để lưu pointer đến các lớp học được tạo
+  - Lớp học sẽ là 1 kiểu struct gồm các thuộc tính:
+   + STT lớp (tính từ 1,2,3,...)
+   + Tên lớp
+   + Học sinh gốc: pointer đến sinh viên Root của cây
+  
+2. Tìm kiếm (tìm kiếm sinh viên trong 1 lớp bằng MSSV)
+  - Các tham số cần nhập: lớp cần tìm, MSSV
+  - Trả về: in ra các thông tin của sinh viên đó nếu tìm đc
+  
+3. Thêm node (thêm sinh viên)
+  - Tham số: lớp cần thêm
+
+4. Thêm cây con (hợp 1 lớp học nhỏ vào lớp lớn)
+
+5. Xóa node (xóa sinh viên)
+
+6. Xóa cây con
+
+7. Duyệt cây (in danh sách lớp)
