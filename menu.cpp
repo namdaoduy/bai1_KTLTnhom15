@@ -66,7 +66,7 @@ void selectMenu() {
             default:
                 cout << " Input sai cu phap, vui long nhap lai!" << endl;
         }
-    } while ((selection < 1) && (selection > 7));
+    } while ((selection < 1) || (selection > 7));
 
     return;
 }
