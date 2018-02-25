@@ -12,6 +12,7 @@
 
 using namespace std;
 
+
 // Hàm tạo dữ liệu Student mới
 // Trả về địa chỉ của Student đó
 Student* createStudent() {
@@ -22,27 +23,36 @@ Student* createStudent() {
 	cout << " Nhap MSSV: ";
 	cin >> new_student->MSSV;
 
-	cout << " Nhap ten sinh vien: ";
+	cout << " Nhap ten: ";
 	cin.ignore();
 	gets(new_student->name);
 
-	cout << " Nhap tuoi sinh vien: ";
+	cout << " Nhap tuoi: ";
 	cin >> new_student->age;
 
+	// Trả về địa chỉ
 	return new_student;
 }
 
 
+
+// Khởi tạo 1 Node mới và gán data là student vừa tạo
 Node* createNode(Student* student) {
+	// Cấp phát
     Node* new_node = new Node();
+
+	// Gán dữ liệu
     new_node->data = *student;
+
+	// Gán NULL cho 2 con trái và phải
     new_node->child_left = new_node->child_right = NULL;
+
     return new_node;
 }
 
 
 // Hàm findInsert để tìm chỗ Insert Node mới
-// Tìm vị tr í(con trỏ) của 1 nút phù hợp của BST để làm cha của new_node cần thêm vào
+// Tìm vị trí (con trỏ) của 1 nút phù hợp của BST để làm cha của new_node cần thêm vào
 Node* findInsert(Node* root, Node* new_node) {
 	// Nếu cây là rỗng thì trả về root
 	if (root == NULL) {
@@ -51,8 +61,12 @@ Node* findInsert(Node* root, Node* new_node) {
 
     // Khai báo position: con trỏ tại vị trí đang duyệt
 	Node* position = root;
+	
+	// Khai báo parent: chứa cha của vị trí tìm được
+	Node* parent = position;
 
 	while (position != NULL) {
+		parent = position;
 		//Di chuyển con trỏ position tới vị trí thích hợp kế tiếp phụ thuộc thuộc tính khóa là MSSV
 		if ((new_node->data).MSSV < (position->data).MSSV) {
 			position = position->child_left;
@@ -61,7 +75,8 @@ Node* findInsert(Node* root, Node* new_node) {
 			position = position->child_right;
 		}
 	}
-	return position;
+
+	return parent;
 }
 
 
@@ -85,8 +100,8 @@ void insertNode(Node* &root, Node* new_node) {
 		parent->child_right = new_node;
 		}
 	}
-}
 
+}
 
 
 // Tìm kiếm địa chỉ của Node có MSSV đã cho
@@ -95,7 +110,7 @@ Node* searchNode(Tree root, int mssv) {
     Node* curr = root;
 
     // Duyệt cây và so sánh mssv với MSSV của Node hiện tại
-	while (curr != nullptr && (curr->data).MSSV != mssv) {
+	while (curr != NULL && (curr->data).MSSV != mssv) {
         // Nếu mssv nhỏ hơn của Node hiện tại, duyệt cây con bên trái
         // không thì duyệt cây bên phải
 		if (mssv < (curr->data).MSSV)
@@ -108,12 +123,16 @@ Node* searchNode(Tree root, int mssv) {
 }
 
 
-
+// Hàm in thông tin sinh viên
 void printStudent(Node* node) {
     Student temp = node->data;
     cout << left << setw(15) << temp.MSSV << setw(20) << temp.name << setw(5) << temp.age << endl;
 }
 
+
+void printTitle() {
+	cout << left << setw(15) <<     "ID"  << setw(20) <<   "TEN"   << setw(5) <<   "TUOI" << endl;
+}
 void printClass(Node* root) {
 	if (root != NULL) {
 		printClass(root->child_left);
@@ -126,7 +145,7 @@ void printClass(Node* root) {
 // input: mã lớp lớn, mã lớp nhỏ
 // output: thông báo lớp đã được gộp
 void mergeClass(Node* root, Node* sub_root) {
-    if (sub_root != nullptr) {
+    if (sub_root != NULL) {
         mergeClass(root, sub_root->child_left);
         insertNode(root, sub_root);
         mergeClass(root, sub_root->child_right);
@@ -175,7 +194,7 @@ void deleteNode(Node* &root, Node* &node_to_del) {
 
 void deleteSubtree(Tree root, int mssv) {
     Node* sub_root = searchNode(root, mssv);
-    while (sub_root != nullptr) {
+    while (sub_root != NULL) {
         deleteNode(root, sub_root);
     }
 
@@ -191,7 +210,7 @@ void deleteSubtree(Tree root, int mssv) {
 // Output: thay đổi giá trị của 2 biến đó
 void searchNodeAndParent(Node* &curr, int mssv, Node* &parent) {
     // traverse the tree and search for the mssv
-	while (curr != nullptr && (curr->data).MSSV != mssv)
+	while (curr != NULL && (curr->data).MSSV != mssv)
 	{
 	    // update parent node as current node
 		parent = curr;

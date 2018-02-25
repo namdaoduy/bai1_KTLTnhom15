@@ -7,6 +7,7 @@ Node* createNode(Student* student);
 Node* findInsert(Node* root, Node* new_node);
 void insertNode(Node* &root, Node* new_node);
 Node* searchNode(Tree root, int mssv);
+void printTitle();
 void printStudent(Node* node);
 void printClass(Node* root);
 void mergeClass(Node* root, Node* sub_root);

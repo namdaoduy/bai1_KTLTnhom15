@@ -8,6 +8,7 @@
 #include <iostream>
 #include "menu.h"
 #include "startFunction.h"
+#include <cstdlib>
 
 using namespace std;
 
@@ -22,7 +23,7 @@ void displayMenu() {
          << " 3. Them sinh vien vao 1 lop hoc" << endl
          << " 4. Hop 1 lop hoc nho vao lop hoc lon" << endl
          << " 5. Xoa sinh vien" << endl
-         << " 6. Xoa cay con???" << endl
+         << " 6. Xoa cay con" << endl
          << " 7. In danh sach lop" << endl
          << endl;
 
@@ -37,7 +38,7 @@ void selectMenu() {
 
     // Tạo vòng lặp để người dùng nhập lại khi nhập sai
     do {
-        cout << " Chon chuc nang can thuc hien (1-9): ";
+        cout << " Chon chuc nang can thuc hien (1-7): ";
 
         cin >> selection;
 
@@ -68,6 +69,6 @@ void selectMenu() {
                 cout << " Input sai cu phap, vui long nhap lai!" << endl;
         }
     } while ((selection < 1) || (selection > 7));
-
+    system("PAUSE");
     return;
 }

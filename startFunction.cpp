@@ -12,6 +12,7 @@
 
 using namespace std;
 
+
 // Hàm: startCreateClass()
 // Bắt đầu việc thực hiện tạo 1 lớp học mới
 int startCreateClass() {
@@ -75,6 +76,7 @@ int startSearchStudent() {
         // In thông tin của sinh viên đó
         cout << " Tim thay sinh vien: " << endl
              << "--------------------" << endl;
+        printTitle();
         printStudent(found_node);
 
         // Hỏi xem người dùng muốn tiếp tục tìm kiếm không?
@@ -228,6 +230,7 @@ int startPrintClass() {
         cin >> class_num;
     } while (class_num < 1 || class_num > classCount);
 
+    printTitle();
     // Gọi hàm printClass() để in lớp
     printClass(classRoot[class_num]);
     return 0;
