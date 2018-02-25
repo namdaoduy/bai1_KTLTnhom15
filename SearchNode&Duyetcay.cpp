@@ -14,7 +14,7 @@ NODE* SearchNode(NODE* root,int x)
   i++
  }
 }
-void LNR(NODE* root, dataruct sinhvien data[], int countdata) //countdata la so sv cua lop, co the viet them ham dem so sv
+void LNR(NODE* root, sinhvien data[], int countdata) //countdata la so sv cua lop, co the viet them ham dem so sv
 {
  int i = 0;
  cout<<left<<setw(5)<<"dataT"<<setw(15)<<"ID"<<setw(20)<<"TEN"<<setw(5)<<"TUOI"
