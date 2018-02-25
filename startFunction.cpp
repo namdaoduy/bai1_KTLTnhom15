@@ -8,6 +8,7 @@
 #include "startFunction.h"
 #include "typedef.h"
 #include "main.h"
+#include "smallFunction.h"
 
 using namespace std;
 
@@ -32,15 +33,16 @@ int startCreateClass() {
     while (1) {
         // Gọi hàm createStudent() để thêm thông tin sinh viên mới
         Student* newStudent = createStudent();
-
-        // Gọi hàm insertNode() để gán sinh viên mới vào cây
-        insertNode(classRoot[thisClass], newStudent);
+        // Gọi createNode() để gán student vừa tạo vào 1 node mới
+        Node* new_node = createNode(newStudent);
+        // Gọi hàm insertNode() để gán node mới vào cây
+        insertNode(classRoot[thisClass], new_node);
 
         // Hỏi xem người dùng muốn tiếp tục thêm sinh viên không?
         cout << " Tiep tuc them sinh vien? (y/n): ";
-        fflush(stdin);
+        cin.ignore();
         // Biến confirm để lưu lựa chọn của người dùng nhập vào
-        char confirm = 'n'; 
+        char confirm = 'n';
         cin >> confirm;
         if (confirm != 'y')
             break;
@@ -68,18 +70,18 @@ int startSearchStudent() {
         cin >> class_num;
 
         // Thực hiện tìm kiếm
-        Student* found_student = searchStudent(classRoot[class_num], mssv);
+        Node* found_node = searchNode(classRoot[class_num], mssv);
 
         // In thông tin của sinh viên đó
         cout << " Tim thay sinh vien: " << endl
              << "--------------------" << endl;
-        printStudent(found_student);
+        printStudent(found_node);
 
         // Hỏi xem người dùng muốn tiếp tục tìm kiếm không?
         cout << " Tiep tuc tim kiem? (y/n): ";
-        fflush(stdin);
+        cin.ignore();
         // Biến confirm để lưu lựa chọn của người dùng nhập vào
-        char confirm = 'n'; 
+        char confirm = 'n';
         cin >> confirm;
         if (confirm != 'y')
             break;
@@ -101,22 +103,23 @@ int startAddStudent() {
     // Tạo vòng lặp để bắt nhập lại khi nhập sai lớp
     do {
         cout << " Nhap lop can them sinh vien: ";
-        cin >> class_num
+        cin >> class_num;
     } while (class_num < 1 || class_num > classCount);
 
     // Tạo vòng lặp
     while (1) {
         // Gọi hàm createStudent() để thêm thông tin sinh viên mới
         Student* newStudent = createStudent();
-
-        // Gọi hàm insertNode() để gán sinh viên mới vào cây
-        insertNode(classRoot[thisClass], newStudent);
+        // Gọi createNode() để gán student vừa tạo vào 1 node mới
+        Node* new_node = createNode(newStudent);
+        // Gọi hàm insertNode() để gán node mới vào cây
+        insertNode(classRoot[class_num], new_node);
 
         // Hỏi xem người dùng muốn tiếp tục thêm sinh viên không?
         cout << " Tiep tuc them sinh vien? (y/n): ";
-        fflush(stdin);
+        cin.ignore();
         // Biến confirm để lưu lựa chọn của người dùng nhập vào
-        char confirm = 'n'; 
+        char confirm = 'n';
         cin >> confirm;
         if (confirm != 'y')
             break;
@@ -147,7 +150,7 @@ int startMergeClass() {
     }
 
     // Gọi hàm mergeClass để hợp lớp phụ vào lớp chính
-    mergeClass(class_num, subclass_num);
+    mergeClass(classRoot[class_num], classRoot[subclass_num]);
 
     return 0;
 }
@@ -169,11 +172,16 @@ int startDeleteStudent() {
     // Tạo vòng lặp để bắt nhập lại khi nhập sai lớp
     do {
         cout << " Nhap lop can xoa sinh vien: ";
-        cin >> class_num
+        cin >> class_num;
     } while (class_num < 1 || class_num > classCount);
 
+    // Tìm sinh viên
+    Node* root = classRoot[class_num];
+    Node* node_to_del = searchNode(classRoot[class_num], mssv);
+
     // Gọi hàm deleteNode() để xóa sinh viên
-    deleteNode(classRoot[class_num], mssv);
+    deleteNode(root, node_to_del);
+
     return 0;
 }
 
@@ -187,7 +195,7 @@ int startDeleteSubtree() {
 
     // Yêu cầu nhập mssv của sinh viên làm gốc cây con cần xóa
     int mssv;
-    cout << " Nhap mssv cua sinh vien goc: "
+    cout << " Nhap mssv cua sinh vien goc: ";
     cin >> mssv;
 
     // Nhập lớp cần xóa cây con
@@ -195,7 +203,7 @@ int startDeleteSubtree() {
     // Tạo vòng lặp để bắt nhập lại khi nhập sai lớp
     do {
         cout << " Nhap lop can xoa cay con: ";
-        cin >> class_num
+        cin >> class_num;
     } while (class_num < 1 || class_num > classCount);
 
     // Gọi hàm deleteSubtree() để xóa cây con
@@ -216,11 +224,11 @@ int startPrintClass() {
     int class_num = 0;
     // Tạo vòng lặp để bắt nhập lại khi nhập sai lớp
     do {
-        cout << " Nhap lop can xoa cay con: ";
-        cin >> class_num
+        cout << " Nhap lop can in: ";
+        cin >> class_num;
     } while (class_num < 1 || class_num > classCount);
 
     // Gọi hàm printClass() để in lớp
-    printClass(class_num);
+    printClass(classRoot[class_num]);
     return 0;
 }
