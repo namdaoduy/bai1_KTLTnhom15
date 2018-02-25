@@ -1,6 +1,8 @@
-// File: typedef.cpp
+// File: typedef.h
 //
 // Định nghĩa các kiểu dữ liệu
+// include vào các file cần sử dụng
+
 
 // Định nghĩa kiểu: Student
 // Các thuộc tính:
@@ -24,6 +26,7 @@ typedef struct Node {
 	Node* child_left;
 	Node* child_right;
 } Node;
+
 
 // Kiểu Tree
 // Là pointer đến Node root của cây
