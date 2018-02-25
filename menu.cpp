@@ -7,6 +7,7 @@
 
 #include <iostream>
 #include "menu.h"
+#include "startFunction.h"
 
 using namespace std;
 
@@ -24,7 +25,7 @@ void displayMenu() {
          << " 6. Xoa cay con???" << endl
          << " 7. In danh sach lop" << endl
          << endl;
-    
+
     selectMenu();
     return;
 }
@@ -43,25 +44,25 @@ void selectMenu() {
         // Gọi các hàm tùy theo lựa chọn của người dùng
         switch (selection) {
             case 1:
-                createNewClass();
+                startCreateClass();
                 break;
             case 2:
-                searchStudent();
+                startSearchStudent();
                 break;
             case 3:
-                addStudent();
+                startAddStudent();
                 break;
             case 4:
-                mergeClass();
+                startMergeClass();
                 break;
             case 5:
-                deleteStudent();
+                startDeleteStudent();
                 break;
             case 6:
-                deleteSubtree();
+                startDeleteSubtree();
                 break;
             case 7:
-                printClass();
+                startPrintClass();
                 break;
             default:
                 cout << " Input sai cu phap, vui long nhap lai!" << endl;
