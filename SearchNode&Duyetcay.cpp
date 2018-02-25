@@ -14,6 +14,11 @@ NODE* SearchNode(NODE* root,int x)
   i++
  }
 }
+void printStudent(NODE* root)
+{
+    student *temp = (*root).data;
+    cout<<left<<setw(15)<<(*temp).mssv<<setw(20)<<(*temp).name<<setw(5)<<(*temp).age<<endl;
+}
 void LNR(NODE* root, sinhvien data[], int countdata) //countdata la so sv cua lop, co the viet them ham dem so sv
 {
  int i = 0;
@@ -21,10 +26,8 @@ void LNR(NODE* root, sinhvien data[], int countdata) //countdata la so sv cua lo
  while (i<countdata)
  {
   if (root != NULL){
-       LNR (root -> child_left, sinhvien data[], countdata)
-       cout<<left<<setw(5)<<i+1<<setw(15)<<data[i].mssv<<setw(20)<<data[i].name<<setw(5)
-<<data[i].age;
-  cout<<"\n";
+       LNR (root -> child_left, sinhvien data[], countdata);
+      printStudent(root);
        LNR(root->child_right, sinhvien data[], countdata);
    }
    i++;
