@@ -19,8 +19,8 @@ typedef struct Student {
 // Định nghĩa kiểu: Node
 // Các thuộc tính:
 // - data: lưu dữ liệu của sinh viên, kiểu Student
-// - child_left: lưu pointer tới con trái
-// - child_right: lưu pointer tới con phải
+// - child_left: lưu địa chỉ tới con trái
+// - child_right: lưu địa chỉ tới con phải
 typedef struct Node {
 	Student data;
 	Node* child_left;

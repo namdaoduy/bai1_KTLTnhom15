@@ -11,6 +11,7 @@ void printTitle();
 void printStudent(Node* node);
 void printClass(Node* root);
 void mergeClass(Node* root, Node* sub_root);
-void deleteNode(Node* &root, Node* &node_to_del);
+int deleteNode(Node* &root, int ID);
 void deleteSubtree(Tree root, int mssv);
 void searchNodeAndParent(Node* &curr, int mssv, Node* &parent);
+void addStudent(Node* &root);

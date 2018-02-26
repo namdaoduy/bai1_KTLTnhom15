@@ -19,16 +19,27 @@ Student* createStudent() {
 	// Cấp phát dữ liệu
 	Student* new_student = new Student;
 
-	// Nhập các thông số
-	cout << " Nhap MSSV: ";
-	cin >> new_student->MSSV;
+	do {
+		fflush(stdin);
+		cin.clear();
+		// Nhập các thông số
+		cout << "    - Nhap MSSV: ";
+		cin >> new_student->MSSV;
+	} while (cin.fail() == 1);
 
-	cout << " Nhap ten: ";
-	cin.ignore();
-	gets(new_student->name);
+	do {
+		fflush(stdin);
+		cin.clear();
+		cout << "    - Nhap ten: ";
+		gets(new_student->name);
+	} while (cin.fail() == 1);
 
-	cout << " Nhap tuoi: ";
-	cin >> new_student->age;
+	do {
+		fflush(stdin);
+		cin.clear();
+		cout << "    - Nhap tuoi: ";
+		cin >> new_student->age;
+	} while (cin.fail() == 1);
 
 	// Trả về địa chỉ
 	return new_student;
@@ -47,6 +58,7 @@ Node* createNode(Student* student) {
 	// Gán NULL cho 2 con trái và phải
     new_node->child_left = new_node->child_right = NULL;
 
+	// Trả về địa chỉ của node vừa tạo
     return new_node;
 }
 
@@ -61,7 +73,7 @@ Node* findInsert(Node* root, Node* new_node) {
 
     // Khai báo position: con trỏ tại vị trí đang duyệt
 	Node* position = root;
-	
+
 	// Khai báo parent: chứa cha của vị trí tìm được
 	Node* parent = position;
 
@@ -101,6 +113,32 @@ void insertNode(Node* &root, Node* new_node) {
 		}
 	}
 
+	return;
+}
+
+
+// Hàm addStudent() vào 1 lớp
+void addStudent(Node* &root) {
+	// Tạo vòng lặp
+    while (1) {
+        // Gọi hàm createStudent() để thêm thông tin sinh viên mới
+        Student* newStudent = createStudent();
+        // Gọi createNode() để gán student vừa tạo vào 1 node mới
+        Node* new_node = createNode(newStudent);
+        // Gọi hàm insertNode() để gán node mới vào cây
+        insertNode(root, new_node);
+
+        // Hỏi xem người dùng muốn tiếp tục thêm sinh viên không?
+        cout << " Tiep tuc them sinh vien? (y/n): ";
+		cin.clear();
+		fflush(stdin);
+        // Biến confirm để lưu lựa chọn của người dùng nhập vào
+        char confirm = 'n';
+        cin >> confirm;
+        if (confirm != 'y')
+            break;
+    }
+    return;
 }
 
 
@@ -125,14 +163,25 @@ Node* searchNode(Tree root, int mssv) {
 
 // Hàm in thông tin sinh viên
 void printStudent(Node* node) {
+	// Gán dữ liệu SV trong node vào biến temp để tiện xử lý
     Student temp = node->data;
-    cout << left << setw(15) << temp.MSSV << setw(20) << temp.name << setw(5) << temp.age << endl;
+
+	// In ra thông tin sinh viên
+    cout << left << "       " << setw(15) << temp.MSSV << setw(30) << temp.name << setw(5) << temp.age << endl;
+
+	return;
 }
 
 
+// Hàm in ra đề mục cho danh sách thông tin sinh viên
 void printTitle() {
-	cout << left << setw(15) <<     "ID"  << setw(20) <<   "TEN"   << setw(5) <<   "TUOI" << endl;
+	cout << left << "       " << setw(15) <<   "MSSV"  << setw(30) <<   "TEN"   << setw(5) <<   "TUOI" << endl
+		 << "       --------------------------------------------------" << endl;
+	return;
 }
+
+
+// Hàm in ra thông tin 1 lớp theo thứ tự tăng dần MSSV
 void printClass(Node* root) {
 	if (root != NULL) {
 		printClass(root->child_left);
@@ -140,6 +189,7 @@ void printClass(Node* root) {
 		printClass(root->child_right);
 	}
 }
+
 
 // Hợp lớp nhỏ vào lớp lớn, sử dụng duyệt LNR
 // input: mã lớp lớn, mã lớp nhỏ
@@ -153,73 +203,70 @@ void mergeClass(Node* root, Node* sub_root) {
 }
 
 
-
-// Hàm xóa Node khỏi 1 cây
-void deleteNode(Node* &root, Node* &node_to_del) {
-	// Nếu Node cần xóa không có con trái thì
-    // xóa Node này và nối con phải của nó vào vị trí vừa xóa
-    // (con phải có thể là NULL khi Node cần xóa là lá)
-	if (node_to_del->child_left == NULL)
-        node_to_del = node_to_del->child_right;
-
-	// hoặc nếu Node cần xóa không có con phải hoặc là nút lá,
-    // xóa Node này và nối con trái của nó vào vị trí vừa xóa
-	else if (node_to_del->child_right == NULL)
-        node_to_del = node_to_del->child_left;
-
-	// hoặc Xóa Node có đầy đủ cả 2 con
-	else {
-		// Thay thế Node cần xóa death SV bởi NODE PHẢI NHẤT CỦA CÂY CON TRÁI
-		// Khai báo most_right và father_most_right là cha của most_right
-		Node* father_most_right = node_to_del->child_left;
-		Node* most_right = father_most_right;
-
-		//Vòng lặp tìm ra NODE PHẢI NHẤT CỦA CÂY CON TRÁI
-		while (most_right->child_right != NULL)
-		{
-			father_most_right = most_right;
-			most_right = most_right->child_right;
-		}
-
-		//Đưa thông tin của Node phải nhất vào Node cần xóa
-		//Xóa Node
-		most_right->data = node_to_del->data;
-		father_most_right->child_right = most_right->child_left;
-	}
-}
-
-
-
-
-
+// Hàm xóa cây con khỏi cây lớn
+// tại 1 node trên cây
 void deleteSubtree(Tree root, int mssv) {
     Node* sub_root = searchNode(root, mssv);
     while (sub_root != NULL) {
-        deleteNode(root, sub_root);
+        deleteNode(root, (sub_root->data).MSSV);
     }
 
+	return;
 }
 
 
-
-
-
-
-// Tìm kiếm Node trong cây và cha của nó
-// Input: biến để lưu node và parent
-// Output: thay đổi giá trị của 2 biến đó
-void searchNodeAndParent(Node* &curr, int mssv, Node* &parent) {
-    // traverse the tree and search for the mssv
-	while (curr != NULL && (curr->data).MSSV != mssv)
+// Hàm xóa Node khỏi 1 cây
+// Trả về 0 khi cây đang rỗng,không thể xóa
+// Trả về 1 khi xóa thành công
+int deleteNode(Node* &root, int ID)
+{
+	if (root == NULL) return 0;
+	//Đệ quy
+	else if (root->data.MSSV>ID) return deleteNode(root->child_left, ID);
+	else if (root->data.MSSV < ID) return deleteNode(root->child_right, ID);
+	else
 	{
-	    // update parent node as current node
-		parent = curr;
+		// Nếu Node cần xóa không có con trái thì
+		// xóa Node này và nối con phải của nó vào vị trí vừa xóa
+		// (con phải có thể là NULL khi Node cần xóa là lá)
+		if (root->child_left == NULL)
+		{
+			root = root->child_right;
+		}
+		else if (root->child_right == NULL)
+		{
+			root = root->child_left;
+		}
 
-        // if given mssv is less than the current node, go to child_left subtree
-        // else go to child_right subtree
-		if (mssv < (curr->data).MSSV)
-			curr = curr->child_left;
-		else
-			curr = curr->child_right;
+		// hoặc Xóa Node có đầy đủ cả 2 con
+		else {
+			// Thay thế Node cần xóa bởi NODE PHẢI NHẤT CỦA CÂY CON TRÁI
+			// Khai báo most_right và father_most_right là cha của most_right
+			Node* father_most_right = root->child_left;
+			Node* most_right = father_most_right;
+			//Nếu father_most_right không có con phải thì thao tác như sau
+			if (father_most_right->child_right == NULL)
+			{
+				root->data = father_most_right->data;
+				root->child_left = father_most_right->child_left;
+			}
+			else
+			{
+				//Vòng lặp tìm ra NODE PHẢI NHẤT CỦA CÂY CON TRÁI
+				while (most_right->child_right != NULL)
+				{
+					father_most_right = most_right;
+					most_right = most_right->child_right;
+				}
+
+				//Đưa thông tin của Node phải nhất vào Node cần xóa
+				//Xóa Node
+				root->data = most_right->data;
+				father_most_right->child_right = most_right->child_left;
+			}
+
+
+		}
+		return 1;//trả về 1 nếu thực hiện thành công
 	}
 }

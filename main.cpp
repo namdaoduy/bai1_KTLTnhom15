@@ -3,10 +3,8 @@
 #include <iostream>
 
 // Các biến global:
-// Tạo mảng classRoot để lưu các lớp đã được tạo
-Tree classRoot[20] = {NULL};
-// Biến classCount để đếm số lớp đã được tạo
-int classCount = 0;
+// Tạo biến classRoot để lưu gốc của lớp được tạo
+Tree classRoot = NULL;
 
 
 int main() {
