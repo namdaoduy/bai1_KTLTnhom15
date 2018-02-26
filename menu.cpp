@@ -12,6 +12,7 @@
 #include "startFunction.h"
 #include <cstdlib>
 #include <cstdio>
+#include <conio.h>
 
 using namespace std;
 
@@ -84,6 +85,8 @@ void selectMenu() {
         }
     }
 
-    system("PAUSE");
+    cout << " Press any key..." << endl
+         << endl;
+    getch();
     return;
 }

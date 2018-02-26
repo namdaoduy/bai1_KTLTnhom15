@@ -205,36 +205,41 @@ void mergeClass(Node* root, Node* sub_root) {
 
 // Hàm xóa cây con khỏi cây lớn
 // tại 1 node trên cây
-void deleteSubtree(Tree root, int mssv) {
-    Node* sub_root = searchNode(root, mssv);
-    while (sub_root != NULL) {
-        deleteNode(root, (sub_root->data).MSSV);
-    }
+void deleteSubtree(Tree &root, int mssv) {
+	// Biến replace để lưu địa chỉ của node vừa thay thế vào chỗ sub_root
+	Node* replace = NULL;
+
+	// Dùng vòng lặp, xóa liên tiếp địa chỉ sub_root cho đến khi địa chỉ đó chỉ vào NULL
+	do {
+		replace = deleteNode(root, mssv);
+		// Nếu replace != NULL thì tiếp tục lấy mssv của node đó để tiếp tục xóa
+		if (replace != NULL)
+			mssv = (replace->data).MSSV;
+	}	
+	while (replace != NULL);
 
 	return;
 }
 
 
 // Hàm xóa Node khỏi 1 cây
-// Trả về 0 khi cây đang rỗng,không thể xóa
-// Trả về 1 khi xóa thành công
-int deleteNode(Node* &root, int ID)
+// Trả về địa chỉ của node vừa được thay thế vào chỗ xóa
+Node* deleteNode(Node* &root, int ID)
 {
-	if (root == NULL) return 0;
-	//Đệ quy
-	else if (root->data.MSSV>ID) return deleteNode(root->child_left, ID);
-	else if (root->data.MSSV < ID) return deleteNode(root->child_right, ID);
-	else
-	{
+	if (root == NULL) return NULL;
+	// Đệ quy
+	else if (root->data.MSSV > ID) 
+		return deleteNode(root->child_left, ID);
+	else if (root->data.MSSV < ID) 
+		return deleteNode(root->child_right, ID);
+	else {
 		// Nếu Node cần xóa không có con trái thì
 		// xóa Node này và nối con phải của nó vào vị trí vừa xóa
 		// (con phải có thể là NULL khi Node cần xóa là lá)
-		if (root->child_left == NULL)
-		{
+		if (root->child_left == NULL) {
 			root = root->child_right;
 		}
-		else if (root->child_right == NULL)
-		{
+		else if (root->child_right == NULL) {
 			root = root->child_left;
 		}
 
@@ -245,28 +250,24 @@ int deleteNode(Node* &root, int ID)
 			Node* father_most_right = root->child_left;
 			Node* most_right = father_most_right;
 			//Nếu father_most_right không có con phải thì thao tác như sau
-			if (father_most_right->child_right == NULL)
-			{
+			if (father_most_right->child_right == NULL) {
 				root->data = father_most_right->data;
 				root->child_left = father_most_right->child_left;
 			}
-			else
-			{
+			else {
 				//Vòng lặp tìm ra NODE PHẢI NHẤT CỦA CÂY CON TRÁI
-				while (most_right->child_right != NULL)
-				{
+				while (most_right->child_right != NULL) {
 					father_most_right = most_right;
 					most_right = most_right->child_right;
 				}
 
-				//Đưa thông tin của Node phải nhất vào Node cần xóa
-				//Xóa Node
+				// Đưa thông tin của Node phải nhất vào Node cần xóa
+				// Xóa Node
 				root->data = most_right->data;
 				father_most_right->child_right = most_right->child_left;
 			}
-
-
 		}
-		return 1;//trả về 1 nếu thực hiện thành công
+		// Trả về địa chỉ node vừa được thay thế
+		return root;
 	}
 }
