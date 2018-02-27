@@ -85,8 +85,8 @@ void selectMenu() {
         }
     }
 
-    cout << " Press any key..." << endl
-         << endl;
+    cout << endl
+         << "                      Press any key...                   " << endl;
     getch();
     return;
 }

@@ -50,12 +50,17 @@ int startSearchStudent() {
 
         // Thực hiện tìm kiếm
         Node* found_node = searchNode(classRoot, mssv);
-
-        // In thông tin của sinh viên đó
-        cout << " Tim thay sinh vien: " << endl
-             << "--------------------" << endl;
-        printTitle();
-        printStudent(found_node);
+        if (found_node != NULL) {
+            // In thông tin của sinh viên đó
+            cout << " Tim thay sinh vien: " << endl
+                 << "--------------------" << endl;
+            printTitle();
+            printStudent(found_node);
+        }
+        else {
+            cout << " Khong tim thay sinh vien!" << endl;
+        }
+        
 
         // Hỏi xem người dùng muốn tiếp tục tìm kiếm không?
         cout << " Tiep tuc tim kiem? (y/n): ";
@@ -99,7 +104,7 @@ int startMergeClass() {
     // Yêu cầu người dùng nhập vào lớp nhỏ
     cout << " Nhap lop hoc phu: " << endl;
     addStudent(sub_tree);
-
+    
     // Gọi hàm mergeClass để hợp lớp phụ vào lớp chính
     mergeClass(classRoot, sub_tree);
 

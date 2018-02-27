@@ -19,14 +19,17 @@ Student* createStudent() {
 	// Cấp phát dữ liệu
 	Student* new_student = new Student;
 
+	// Nhập MSSV
 	do {
 		fflush(stdin);
 		cin.clear();
-		// Nhập các thông số
 		cout << "    - Nhap MSSV: ";
 		cin >> new_student->MSSV;
-	} while (cin.fail() == 1);
+	}
+	// Bắt nhập lại khi input sai hoặc đã tồn tại sinh viên
+	while ((cin.fail() == 1) || (searchNode(classRoot, new_student->MSSV) != NULL));
 
+	// Nhập tên
 	do {
 		fflush(stdin);
 		cin.clear();
@@ -34,6 +37,7 @@ Student* createStudent() {
 		gets(new_student->name);
 	} while (cin.fail() == 1);
 
+	// Nhập tuổi
 	do {
 		fflush(stdin);
 		cin.clear();
@@ -41,13 +45,12 @@ Student* createStudent() {
 		cin >> new_student->age;
 	} while (cin.fail() == 1);
 
-	// Trả về địa chỉ
+	// Trả về địa chỉ của học sinh vừa tạo
 	return new_student;
 }
 
 
-
-// Khởi tạo 1 Node mới và gán data là student vừa tạo
+// Hàm khởi tạo 1 Node mới và gán data là student vừa tạo
 Node* createNode(Student* student) {
 	// Cấp phát
     Node* new_node = new Node();
@@ -267,7 +270,7 @@ Node* deleteNode(Node* &root, int ID)
 				father_most_right->child_right = most_right->child_left;
 			}
 		}
-		// Trả về địa chỉ node vừa được thay thế
-		return root;
 	}
+	// Trả về địa chỉ node vừa được thay thế
+	return root;
 }
