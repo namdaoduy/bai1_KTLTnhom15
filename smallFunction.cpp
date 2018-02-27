@@ -15,7 +15,7 @@ using namespace std;
 
 // Hàm tạo dữ liệu Student mới
 // Trả về địa chỉ của Student đó
-Student* createStudent() {
+Student* createStudent(Node* root) {
 	// Cấp phát dữ liệu
 	Student* new_student = new Student;
 
@@ -27,7 +27,7 @@ Student* createStudent() {
 		cin >> new_student->MSSV;
 	}
 	// Bắt nhập lại khi input sai hoặc đã tồn tại sinh viên
-	while ((cin.fail() == 1) || (searchNode(classRoot, new_student->MSSV) != NULL));
+	while ((cin.fail() == 1) || !checkMSSV(root, new_student->MSSV));
 
 	// Nhập tên
 	do {
@@ -47,6 +47,15 @@ Student* createStudent() {
 
 	// Trả về địa chỉ của học sinh vừa tạo
 	return new_student;
+}
+
+
+// Hàm check xem nếu MSSV đã từng tồn tại 
+// trong cây gốc hoặc cây đang được thêm
+int checkMSSV(Node* root, int mssv) {
+	// Thực hiện tìm kiếm trong classRoot và root
+	int check = (searchNode(root, mssv) == NULL) && (searchNode(classRoot, mssv) == NULL);
+	return check;
 }
 
 
@@ -125,7 +134,7 @@ void addStudent(Node* &root) {
 	// Tạo vòng lặp
     while (1) {
         // Gọi hàm createStudent() để thêm thông tin sinh viên mới
-        Student* newStudent = createStudent();
+        Student* newStudent = createStudent(root);
         // Gọi createNode() để gán student vừa tạo vào 1 node mới
         Node* new_node = createNode(newStudent);
         // Gọi hàm insertNode() để gán node mới vào cây
@@ -191,6 +200,7 @@ void printClass(Node* root) {
 		printStudent(root);
 		printClass(root->child_right);
 	}
+	return;
 }
 
 
@@ -198,13 +208,16 @@ void printClass(Node* root) {
 // input: mã lớp lớn, mã lớp nhỏ
 // output: thông báo lớp đã được gộp
 void mergeClass(Node* &root, Node* sub_root) {
+	// Sử dụng duyệt LRN cây bé
     if (sub_root != NULL) {
         mergeClass(root, sub_root->child_left);
         mergeClass(root, sub_root->child_right);
+		// Lấy từng node được duyệt gán data vào 1 node mới được tạo
 		Node* temp_node = createNode(&(sub_root->data));
+		// Và insert vào cây lớn
         insertNode(root, temp_node);
-
     }
+	return;
 }
 
 
@@ -220,7 +233,7 @@ void deleteSubtree(Tree &root, int mssv) {
 		// Nếu replace != NULL thì tiếp tục lấy mssv của node đó để tiếp tục xóa
 		if (replace != NULL)
 			mssv = (replace->data).MSSV;
-	}	
+	}
 	while (replace != NULL);
 
 	return;
@@ -233,9 +246,9 @@ Node* deleteNode(Node* &root, int ID)
 {
 	if (root == NULL) return NULL;
 	// Đệ quy
-	else if (root->data.MSSV > ID) 
+	else if (root->data.MSSV > ID)
 		return deleteNode(root->child_left, ID);
-	else if (root->data.MSSV < ID) 
+	else if (root->data.MSSV < ID)
 		return deleteNode(root->child_right, ID);
 	else {
 		// Nếu Node cần xóa không có con trái thì

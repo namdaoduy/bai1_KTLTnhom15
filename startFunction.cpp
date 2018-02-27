@@ -104,8 +104,7 @@ int startMergeClass() {
     // Yêu cầu người dùng nhập vào lớp nhỏ
     cout << " Nhap lop hoc phu: " << endl;
     addStudent(sub_tree);
-    
-    printClass(sub_tree);
+
     // Gọi hàm mergeClass để hợp lớp phụ vào lớp chính
     mergeClass(classRoot, sub_tree);
 
