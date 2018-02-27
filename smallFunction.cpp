@@ -197,11 +197,13 @@ void printClass(Node* root) {
 // Hợp lớp nhỏ vào lớp lớn, sử dụng duyệt LNR
 // input: mã lớp lớn, mã lớp nhỏ
 // output: thông báo lớp đã được gộp
-void mergeClass(Node* root, Node* sub_root) {
+void mergeClass(Node* &root, Node* sub_root) {
     if (sub_root != NULL) {
         mergeClass(root, sub_root->child_left);
-        insertNode(root, sub_root);
         mergeClass(root, sub_root->child_right);
+		Node* temp_node = createNode(&(sub_root->data));
+        insertNode(root, temp_node);
+
     }
 }
 

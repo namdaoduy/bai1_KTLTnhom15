@@ -10,7 +10,7 @@ Node* searchNode(Tree root, int mssv);
 void printTitle();
 void printStudent(Node* node);
 void printClass(Node* root);
-void mergeClass(Node* root, Node* sub_root);
+void mergeClass(Node* &root, Node* sub_root);
 Node* deleteNode(Node* &root, int ID);
 void deleteSubtree(Tree &root, int mssv);
 void searchNodeAndParent(Node* &curr, int mssv, Node* &parent);
